@@ -1,15 +1,14 @@
 ﻿using System.Windows;
 
-namespace Spark.Views
+namespace Spark.Views;
+
+/// <summary>
+/// Interaction logic for DialogWindow.xaml
+/// </summary>
+public partial class DialogWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for DialogWindow.xaml
-    /// </summary>
-    public partial class DialogWindow : Window
+    public DialogWindow()
     {
-        public DialogWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

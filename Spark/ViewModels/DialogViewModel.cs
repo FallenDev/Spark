@@ -4,136 +4,135 @@ using System.Windows.Input;
 using Spark.Dialogs;
 using Spark.Input;
 
-namespace Spark.ViewModels
+namespace Spark.ViewModels;
+
+public enum DialogButtons
 {
-    public enum DialogButtons
+    OK = 0,
+    OKCancel = 1,
+    YesNo = 2
+}
+
+public class DialogViewModel : WorkspaceViewModel
+{
+    private string title;
+    private string message;
+    private string messageHint;
+    private string positiveButtonTitle;
+    private string negativeButtonTitle;
+    private bool isPositiveButtonVisible;
+    private bool isNegativeButtonVisible;
+
+    private ICommand positiveButtonCommand;
+    private ICommand negativeButtonCommand;
+
+    public event EventHandler PositiveButtonClicked;
+    public event EventHandler NegativeButtonClicked;
+
+    #region Properties
+    public virtual string Title
     {
-        OK = 0,
-        OKCancel = 1,
-        YesNo = 2
+        get { return title; }
+        set { SetProperty(ref title, value); }
     }
 
-    public class DialogViewModel : WorkspaceViewModel
+    public virtual string Message
     {
-        string title;
-        string message;
-        string messageHint;
-        string positiveButtonTitle;
-        string negativeButtonTitle;
-        bool isPositiveButtonVisible;
-        bool isNegativeButtonVisible;
+        get { return message; }
+        set { SetProperty(ref message, value); }
+    }
 
-        ICommand positiveButtonCommand;
-        ICommand negativeButtonCommand;
+    public virtual string MessageHint
+    {
+        get { return messageHint; }
+        set { SetProperty(ref messageHint, value); }
+    }
 
-        public event EventHandler PositiveButtonClicked;
-        public event EventHandler NegativeButtonClicked;
+    public virtual string PositiveButtonTitle
+    {
+        get { return positiveButtonTitle; }
+        set { SetProperty(ref positiveButtonTitle, value); }
+    }
 
-        #region Properties
-        public virtual string Title
+    public virtual string NegativeButtonTitle
+    {
+        get { return negativeButtonTitle; }
+        set { SetProperty(ref negativeButtonTitle, value); }
+    }
+
+    public virtual bool IsPositiveButtonVisible
+    {
+        get { return isPositiveButtonVisible; }
+        set { SetProperty(ref isPositiveButtonVisible, value); }
+    }
+
+    public virtual bool IsNegativeButtonVisible
+    {
+        get { return isNegativeButtonVisible; }
+        set { SetProperty(ref isNegativeButtonVisible, value); }
+    }
+
+    public ICommand PositiveButtonCommand
+    {
+        get
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
-        }
+            // Lazy-initialized
+            if (positiveButtonCommand == null)
+                positiveButtonCommand = new DelegateCommand(x => OnPositiveButtonClicked());
 
-        public virtual string Message
+            return positiveButtonCommand;
+        }
+    }
+
+    public ICommand NegativeButtonCommand
+    {
+        get
         {
-            get { return message; }
-            set { SetProperty(ref message, value); }
-        }
+            // Lazy-initialized
+            if (negativeButtonCommand == null)
+                negativeButtonCommand = new DelegateCommand(x => OnNegativeButtonClicked());
 
-        public virtual string MessageHint
+            return negativeButtonCommand;
+        }
+    }
+    #endregion
+
+    public DialogViewModel(string title, string message, string messageHint = null, DialogButtons buttons = DialogButtons.OK, IDialogService dialogService = null)
+        : base(title, dialogService)
+    {
+        Title = title;
+        Message = message;
+        MessageHint = messageHint;
+
+        if (buttons == DialogButtons.OK || buttons == DialogButtons.OKCancel)
         {
-            get { return messageHint; }
-            set { SetProperty(ref messageHint, value); }
+            PositiveButtonTitle = "_OK";
+            NegativeButtonTitle = "_Cancel";
+            IsPositiveButtonVisible = true;
+            IsNegativeButtonVisible = (buttons == DialogButtons.OKCancel);
         }
-
-        public virtual string PositiveButtonTitle
+        else if (buttons == DialogButtons.YesNo)
         {
-            get { return positiveButtonTitle; }
-            set { SetProperty(ref positiveButtonTitle, value); }
+            PositiveButtonTitle = "_Yes";
+            NegativeButtonTitle = "_No";
+            IsPositiveButtonVisible = true;
+            IsNegativeButtonVisible = true;
         }
+    }
 
-        public virtual string NegativeButtonTitle
-        {
-            get { return negativeButtonTitle; }
-            set { SetProperty(ref negativeButtonTitle, value); }
-        }
+    protected virtual void OnPositiveButtonClicked()
+    {
+        var handler = PositiveButtonClicked;
 
-        public virtual bool IsPositiveButtonVisible
-        {
-            get { return isPositiveButtonVisible; }
-            set { SetProperty(ref isPositiveButtonVisible, value); }
-        }
+        if (handler != null)
+            handler(this, EventArgs.Empty);
+    }
 
-        public virtual bool IsNegativeButtonVisible
-        {
-            get { return isNegativeButtonVisible; }
-            set { SetProperty(ref isNegativeButtonVisible, value); }
-        }
+    protected virtual void OnNegativeButtonClicked()
+    {
+        var handler = NegativeButtonClicked;
 
-        public ICommand PositiveButtonCommand
-        {
-            get
-            {
-                // Lazy-initialized
-                if (positiveButtonCommand == null)
-                    positiveButtonCommand = new DelegateCommand(x => OnPositiveButtonClicked());
-
-                return positiveButtonCommand;
-            }
-        }
-
-        public ICommand NegativeButtonCommand
-        {
-            get
-            {
-                // Lazy-initialized
-                if (negativeButtonCommand == null)
-                    negativeButtonCommand = new DelegateCommand(x => OnNegativeButtonClicked());
-
-                return negativeButtonCommand;
-            }
-        }
-        #endregion
-
-        public DialogViewModel(string title, string message, string messageHint = null, DialogButtons buttons = DialogButtons.OK, IDialogService dialogService = null)
-            : base(title, dialogService)
-        {
-            this.Title = title;
-            this.Message = message;
-            this.MessageHint = messageHint;
-
-            if (buttons == DialogButtons.OK || buttons == DialogButtons.OKCancel)
-            {
-                this.PositiveButtonTitle = "_OK";
-                this.NegativeButtonTitle = "_Cancel";
-                this.IsPositiveButtonVisible = true;
-                this.IsNegativeButtonVisible = (buttons == DialogButtons.OKCancel);
-            }
-            else if (buttons == DialogButtons.YesNo)
-            {
-                this.PositiveButtonTitle = "_Yes";
-                this.NegativeButtonTitle = "_No";
-                this.IsPositiveButtonVisible = true;
-                this.IsNegativeButtonVisible = true;
-            }
-        }
-
-        protected virtual void OnPositiveButtonClicked()
-        {
-            var handler = this.PositiveButtonClicked;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
-        protected virtual void OnNegativeButtonClicked()
-        {
-            var handler = this.NegativeButtonClicked;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
+        if (handler != null)
+            handler(this, EventArgs.Empty);
     }
 }

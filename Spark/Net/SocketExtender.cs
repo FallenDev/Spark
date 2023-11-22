@@ -3,150 +3,149 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Spark.Net
+namespace Spark.Net;
+
+// This extension allows Sockets to use the Task asynchronous patterns instead of traditional Begin/End callbacks
+public static class SocketExtender
 {
-    // This extension allows Sockets to use the Task asynchronous patterns instead of traditional Begin/End callbacks
-    public static class SocketExtender
+    public static Task<Socket> AcceptAsync(this Socket socket)
     {
-        public static Task<Socket> AcceptAsync(this Socket socket)
+        if (socket == null)
+            throw new ArgumentNullException("socket");
+
+        var tcs = new TaskCompletionSource<Socket>();
+
+        socket.BeginAccept(result =>
         {
-            if (socket == null)
-                throw new ArgumentNullException("socket");
-
-            var tcs = new TaskCompletionSource<Socket>();
-
-            socket.BeginAccept(result =>
+            try
             {
-                try
-                {
-                    var s = result.AsyncState as Socket;
-                    var client = s.EndAccept(result);
+                var s = result.AsyncState as Socket;
+                var client = s.EndAccept(result);
 
-                    tcs.SetResult(client);
-                }
-                catch (Exception ex)
-                {
-                    tcs.SetException(ex);
-                }
-
-            }, socket);
-
-            return tcs.Task;
-        }
-
-        public static Task ConnectAsync(this Socket socket, IPAddress ipAddress, int port)
-        {
-            if (ipAddress == null)
-                throw new ArgumentNullException("ipAddress");
-
-            if (port <= 0)
-                throw new ArgumentOutOfRangeException("Port must be greater than zero");
-
-            return ConnectAsync(socket, new IPEndPoint(ipAddress, port));
-        }
-
-        public static Task ConnectAsync(this Socket socket, IPEndPoint endpoint)
-        {
-            if (socket == null)
-                throw new ArgumentNullException("socket");
-
-            var tcs = new TaskCompletionSource<bool>();
-
-            socket.BeginConnect(endpoint, result =>
+                tcs.SetResult(client);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    var s = result.AsyncState as Socket;
-                    s.EndConnect(result);
+                tcs.SetException(ex);
+            }
 
-                    tcs.SetResult(s.Connected);
-                }
-                catch (Exception ex)
-                {
-                    tcs.SetException(ex);
-                }
+        }, socket);
 
-            }, socket);
+        return tcs.Task;
+    }
 
-            return tcs.Task;
-        }
+    public static Task ConnectAsync(this Socket socket, IPAddress ipAddress, int port)
+    {
+        if (ipAddress == null)
+            throw new ArgumentNullException("ipAddress");
 
-        public static Task DisconnectAsync(this Socket socket, bool reuseSocket = false)
+        if (port <= 0)
+            throw new ArgumentOutOfRangeException("Port must be greater than zero");
+
+        return ConnectAsync(socket, new IPEndPoint(ipAddress, port));
+    }
+
+    public static Task ConnectAsync(this Socket socket, IPEndPoint endpoint)
+    {
+        if (socket == null)
+            throw new ArgumentNullException("socket");
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        socket.BeginConnect(endpoint, result =>
         {
-            if (socket == null)
-                throw new ArgumentNullException("socket");
-
-            var tcs = new TaskCompletionSource<bool>();
-
-            socket.BeginDisconnect(reuseSocket, result =>
+            try
             {
-                try
-                {
-                    var s = result.AsyncState as Socket;
-                    s.EndDisconnect(result);
+                var s = result.AsyncState as Socket;
+                s.EndConnect(result);
 
-                    tcs.SetResult(!s.Connected);
-                }
-                catch (Exception ex)
-                {
-                    tcs.SetException(ex);
-                }
+                tcs.SetResult(s.Connected);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
 
-            }, socket);
+        }, socket);
 
-            return tcs.Task;
-        }
+        return tcs.Task;
+    }
 
-        public static Task<int> ReceiveAsync(this Socket socket, byte[] buffer, int offset, int count, SocketFlags flags = SocketFlags.None)
+    public static Task DisconnectAsync(this Socket socket, bool reuseSocket = false)
+    {
+        if (socket == null)
+            throw new ArgumentNullException("socket");
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        socket.BeginDisconnect(reuseSocket, result =>
         {
-            if (socket == null)
-                throw new ArgumentNullException("socket");
-
-            var tcs = new TaskCompletionSource<int>();
-
-            socket.BeginReceive(buffer, offset, count, flags, result =>
+            try
             {
-                try
-                {
-                    var s = result.AsyncState as Socket;
-                    var numberOfBytesReceived = s.EndReceive(result);
+                var s = result.AsyncState as Socket;
+                s.EndDisconnect(result);
 
-                    tcs.SetResult(numberOfBytesReceived);
-                }
-                catch (Exception ex)
-                {
-                    tcs.SetException(ex);
-                }
+                tcs.SetResult(!s.Connected);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
 
-            }, socket);
+        }, socket);
 
-            return tcs.Task;
-        }
+        return tcs.Task;
+    }
 
-        public static Task<int> SendAsync(this Socket socket, byte[] buffer, int offset, int count, SocketFlags flags = SocketFlags.None)
+    public static Task<int> ReceiveAsync(this Socket socket, byte[] buffer, int offset, int count, SocketFlags flags = SocketFlags.None)
+    {
+        if (socket == null)
+            throw new ArgumentNullException("socket");
+
+        var tcs = new TaskCompletionSource<int>();
+
+        socket.BeginReceive(buffer, offset, count, flags, result =>
         {
-            if (socket == null)
-                throw new ArgumentNullException("socket");
-
-            var tcs = new TaskCompletionSource<int>();
-
-            socket.BeginSend(buffer, offset, count, flags, result =>
+            try
             {
-                try
-                {
-                    var s = result.AsyncState as Socket;
-                    var numberOfBytesSent = s.EndSend(result);
+                var s = result.AsyncState as Socket;
+                var numberOfBytesReceived = s.EndReceive(result);
 
-                    tcs.SetResult(numberOfBytesSent);
-                }
-                catch (Exception ex)
-                {
-                    tcs.SetException(ex);
-                }
+                tcs.SetResult(numberOfBytesReceived);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
 
-            }, socket);
+        }, socket);
 
-            return tcs.Task;
-        }
+        return tcs.Task;
+    }
+
+    public static Task<int> SendAsync(this Socket socket, byte[] buffer, int offset, int count, SocketFlags flags = SocketFlags.None)
+    {
+        if (socket == null)
+            throw new ArgumentNullException("socket");
+
+        var tcs = new TaskCompletionSource<int>();
+
+        socket.BeginSend(buffer, offset, count, flags, result =>
+        {
+            try
+            {
+                var s = result.AsyncState as Socket;
+                var numberOfBytesSent = s.EndSend(result);
+
+                tcs.SetResult(numberOfBytesSent);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+
+        }, socket);
+
+        return tcs.Task;
     }
 }

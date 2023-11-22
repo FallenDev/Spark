@@ -2,120 +2,119 @@
 
 using Spark.Models;
 
-namespace Spark.ViewModels
+namespace Spark.ViewModels;
+
+public sealed class UserSettingsViewModel : ViewModelBase
 {
-    public sealed class UserSettingsViewModel : ViewModelBase
+    private UserSettings userSettings;
+
+    #region Model Properties
+    public string ClientExecutablePath
     {
-        UserSettings userSettings;
-
-        #region Model Properties
-        public string ClientExecutablePath
+        get { return userSettings.ClientExecutablePath; }
+        set
         {
-            get { return userSettings.ClientExecutablePath; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ClientExecutablePath = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ClientExecutablePath = value;
+            OnPropertyChanged();
         }
+    }
 
-        public string ClientVersion
+    public string ClientVersion
+    {
+        get { return userSettings.ClientVersion; }
+        set
         {
-            get { return userSettings.ClientVersion; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ClientVersion = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ClientVersion = value;
+            OnPropertyChanged();
         }
+    }
 
-        public bool ShouldAutoDetectClientVersion
+    public bool ShouldAutoDetectClientVersion
+    {
+        get { return userSettings.ShouldAutoDetectClientVersion; }
+        set
         {
-            get { return userSettings.ShouldAutoDetectClientVersion; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ShouldAutoDetectClientVersion = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ShouldAutoDetectClientVersion = value;
+            OnPropertyChanged();
         }
+    }
 
-        public string ServerHostname
+    public string ServerHostname
+    {
+        get { return userSettings.ServerHostname; }
+        set
         {
-            get { return userSettings.ServerHostname; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ServerHostname = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ServerHostname = value;
+            OnPropertyChanged();
         }
+    }
 
-        public int ServerPort
+    public int ServerPort
+    {
+        get { return userSettings.ServerPort; }
+        set
         {
-            get { return userSettings.ServerPort; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ServerPort = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ServerPort = value;
+            OnPropertyChanged();
         }
+    }
 
-        public bool ShouldRedirectClient
+    public bool ShouldRedirectClient
+    {
+        get { return userSettings.ShouldRedirectClient; }
+        set
         {
-            get { return userSettings.ShouldRedirectClient; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ShouldRedirectClient = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ShouldRedirectClient = value;
+            OnPropertyChanged();
         }
+    }
 
-        public bool ShouldSkipIntro
+    public bool ShouldSkipIntro
+    {
+        get { return userSettings.ShouldSkipIntro; }
+        set
         {
-            get { return userSettings.ShouldSkipIntro; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ShouldSkipIntro = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ShouldSkipIntro = value;
+            OnPropertyChanged();
         }
+    }
 
-        public bool ShouldAllowMultipleInstances
+    public bool ShouldAllowMultipleInstances
+    {
+        get { return userSettings.ShouldAllowMultipleInstances; }
+        set
         {
-            get { return userSettings.ShouldAllowMultipleInstances; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ShouldAllowMultipleInstances = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ShouldAllowMultipleInstances = value;
+            OnPropertyChanged();
         }
+    }
 
-        public bool ShouldHideWalls
+    public bool ShouldHideWalls
+    {
+        get { return userSettings.ShouldHideWalls; }
+        set
         {
-            get { return userSettings.ShouldHideWalls; }
-            set
-            {
-                OnPropertyChanging();
-                userSettings.ShouldHideWalls = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            userSettings.ShouldHideWalls = value;
+            OnPropertyChanged();
         }
-        #endregion
+    }
+    #endregion
 
-        public UserSettingsViewModel(UserSettings userSettings)
-            : base(null, null)
-        {
-            if (userSettings == null)
-                throw new ArgumentNullException("userSettings");
+    public UserSettingsViewModel(UserSettings userSettings)
+        : base(null, null)
+    {
+        if (userSettings == null)
+            throw new ArgumentNullException("userSettings");
 
-            this.userSettings = userSettings;
-        }
+        this.userSettings = userSettings;
     }
 }

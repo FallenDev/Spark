@@ -4,37 +4,36 @@ using System.Windows.Input;
 using Spark.Dialogs;
 using Spark.Input;
 
-namespace Spark.ViewModels
+namespace Spark.ViewModels;
+
+public abstract class WorkspaceViewModel : ViewModelBase
 {
-    public abstract class WorkspaceViewModel : ViewModelBase
+    private ICommand closeCommand;
+
+    public event EventHandler RequestClose;
+
+    #region Properties
+    public ICommand CloseCommand
     {
-        ICommand closeCommand;
-
-        public event EventHandler RequestClose;
-
-        #region Properties
-        public ICommand CloseCommand
+        get
         {
-            get
-            {
-                // Lazy initialized
-                if (closeCommand == null)
-                    closeCommand = new DelegateCommand(parameter => OnRequestClose());
+            // Lazy initialized
+            if (closeCommand == null)
+                closeCommand = new DelegateCommand(parameter => OnRequestClose());
 
-                return closeCommand;
-            }
+            return closeCommand;
         }
-        #endregion
+    }
+    #endregion
 
-        protected WorkspaceViewModel(string displayName = null, IDialogService dialogService = null)
-            : base(displayName, dialogService) { }
+    protected WorkspaceViewModel(string displayName = null, IDialogService dialogService = null)
+        : base(displayName, dialogService) { }
 
-        protected virtual void OnRequestClose()
-        {
-            var handler = this.RequestClose;
+    protected virtual void OnRequestClose()
+    {
+        var handler = RequestClose;
 
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
+        if (handler != null)
+            handler(this, EventArgs.Empty);
     }
 }

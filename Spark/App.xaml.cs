@@ -13,183 +13,184 @@ using Spark.Models.Serializers;
 using Spark.ViewModels;
 using Spark.Views;
 
-namespace Spark
+namespace Spark;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public static readonly string ApplicationName = "Spark";
+
+    public static readonly string SettingsFileName = "Settings.xml";
+    public static readonly string SettingsFileVersion = "1.0";
+
+    public static readonly string ClientVersionsFileName = "Versions.xml";
+    public static readonly string ClientVersionsFileVersion = "1.1";
+
+    #region Properties
+    public UserSettings CurrentSettings { get; protected set; }
+    public IEnumerable<ClientVersion> ClientVersions { get; protected set; }
+    #endregion
+
+    #region Application Lifecycle
+    protected override void OnStartup(StartupEventArgs e)
     {
-        public static readonly string ApplicationName = "Spark";
+        base.OnStartup(e);
 
-        public static readonly string SettingsFileName = "Settings.xml";
-        public static readonly string SettingsFileVersion = "1.0";
+        // Load settings and client versions from file (or defaults)
+        CurrentSettings = LoadSettingsOrDefaults(SettingsFileName);
+        ClientVersions = LoadClientVersionsOrDefaults(ClientVersionsFileName);
 
-        public static readonly string ClientVersionsFileName = "Versions.xml";
-        public static readonly string ClientVersionsFileVersion = "1.1";
+        // Initialize the main window and view model
+        var window = new MainWindow();
+        var dialogService = new DialogService(window);
+        var viewModel = new MainViewModel(CurrentSettings, ClientVersions, dialogService);
 
-        #region Properties
-        public UserSettings CurrentSettings { get; protected set; }
-        public IEnumerable<ClientVersion> ClientVersions { get; protected set; }
-        #endregion
-
-        #region Application Lifecycle
-        protected override void OnStartup(StartupEventArgs e)
+        // Bind the request close event to closing the window
+        viewModel.RequestClose += delegate
         {
-            base.OnStartup(e);
+            window.Close();
+        };
 
-            // Load settings and client versions from file (or defaults)
-            this.CurrentSettings = LoadSettingsOrDefaults(App.SettingsFileName);
-            this.ClientVersions = LoadClientVersionsOrDefaults(App.ClientVersionsFileName);
+        // Assign the view model to the data context and display the main window
+        window.DataContext = viewModel;
+        window.Show();
+    }
 
-            // Initialize the main window and view model
-            var window = new MainWindow();
-            var dialogService = new DialogService(window);
-            var viewModel = new MainViewModel(this.CurrentSettings, this.ClientVersions, dialogService);
+    protected override void OnExit(ExitEventArgs e)
+    {
+        SaveUserSettings(SettingsFileName, CurrentSettings);
+        SaveClientVersions(ClientVersionsFileName, ClientVersions);
 
-            // Bind the request close event to closing the window
-            viewModel.RequestClose += delegate
-            {
-                window.Close();
-            };
+        base.OnExit(e);
+    }
+    #endregion
 
-            // Assign the view model to the data context and display the main window
-            window.DataContext = viewModel;
-            window.Show();
+    #region Save/Load User Settings
+
+    private static void SaveUserSettings(string fileName, UserSettings settings)
+    {
+        if (fileName == null)
+            throw new ArgumentNullException("fileName");
+
+        if (settings == null)
+            throw new ArgumentNullException("settings");
+
+        try
+        {
+            var xml = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement("Settings",
+                    new XAttribute("FileVersion", SettingsFileVersion),
+                    settings.Serialize()));
+
+            // Save user settings to file
+            xml.Save(fileName);
         }
-
-        protected override void OnExit(ExitEventArgs e)
+        catch (Exception ex)
         {
-            SaveUserSettings(App.SettingsFileName, this.CurrentSettings);
-            SaveClientVersions(App.ClientVersionsFileName, this.ClientVersions);
-
-            base.OnExit(e);
+            Debug.WriteLine(string.Format("Unable to save user settings: {0}", ex.Message));
         }
-        #endregion
+    }
 
-        #region Save/Load User Settings
-        static void SaveUserSettings(string fileName, UserSettings settings)
+    private static UserSettings LoadSettingsOrDefaults(string fileName)
+    {
+        if (fileName == null)
+            throw new ArgumentNullException("fileName");
+
+        try
         {
-            if (fileName == null)
-                throw new ArgumentNullException("fileName");
-
-            if (settings == null)
-                throw new ArgumentNullException("settings");
-
-            try
+            // Load user settings from file
+            if (File.Exists(fileName))
             {
-                var xml = new XDocument(
-                    new XDeclaration("1.0", "utf-8", "yes"),
-                    new XElement("Settings",
-                        new XAttribute("FileVersion", App.SettingsFileVersion),
-                        settings.Serialize()));
-
-                // Save user settings to file
-                xml.Save(fileName);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(string.Format("Unable to save user settings: {0}", ex.Message));
-            }
-        }
-
-        static UserSettings LoadSettingsOrDefaults(string fileName)
-        {
-            if (fileName == null)
-                throw new ArgumentNullException("fileName");
-
-            try
-            {
-                // Load user settings from file
-                if (File.Exists(fileName))
-                {
-                    var xml = XDocument.Load(fileName);
-                    return UserSettingsSerializer.DeserializeAll(xml).FirstOrDefault() ?? UserSettings.CreateDefaults();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(string.Format("Unable to load user settings: {0}", ex.Message));
-            }
-
-            return UserSettings.CreateDefaults();
-        }
-        #endregion
-
-        #region Save/Load Client Versions
-        static void SaveClientVersions(string fileName, IEnumerable<ClientVersion> versions)
-        {
-            if (fileName == null)
-                throw new ArgumentNullException("fileName");
-
-            if (versions == null)
-                throw new ArgumentNullException("versions");
-
-            try
-            {
-                // Save client versions to file
-                var xml = new XDocument(
-                    new XDeclaration("1.0", "utf-8", "yes"),
-                    new XElement("SupportedClients",
-                        new XAttribute("FileVersion", App.ClientVersionsFileVersion),
-                        versions.SerializeAll()));
-
-                xml.Save(fileName);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(string.Format("Unable to save client versions: {0}", ex.Message));
+                var xml = XDocument.Load(fileName);
+                return UserSettingsSerializer.DeserializeAll(xml).FirstOrDefault() ?? UserSettings.CreateDefaults();
             }
         }
-
-        static IEnumerable<ClientVersion> LoadClientVersionsOrDefaults(string fileName)
+        catch (Exception ex)
         {
-            if (fileName == null)
-                throw new ArgumentNullException("fileName");
+            Debug.WriteLine(string.Format("Unable to load user settings: {0}", ex.Message));
+        }
 
-            IEnumerable<ClientVersion> clientVersions = null;
+        return UserSettings.CreateDefaults();
+    }
+    #endregion
+
+    #region Save/Load Client Versions
+
+    private static void SaveClientVersions(string fileName, IEnumerable<ClientVersion> versions)
+    {
+        if (fileName == null)
+            throw new ArgumentNullException("fileName");
+
+        if (versions == null)
+            throw new ArgumentNullException("versions");
+
+        try
+        {
+            // Save client versions to file
+            var xml = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement("SupportedClients",
+                    new XAttribute("FileVersion", ClientVersionsFileVersion),
+                    versions.SerializeAll()));
+
+            xml.Save(fileName);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(string.Format("Unable to save client versions: {0}", ex.Message));
+        }
+    }
+
+    private static IEnumerable<ClientVersion> LoadClientVersionsOrDefaults(string fileName)
+    {
+        if (fileName == null)
+            throw new ArgumentNullException("fileName");
+
+        IEnumerable<ClientVersion> clientVersions = null;
             
-            try
+        try
+        {
+            // Load client versions from file
+            if (File.Exists(fileName))
             {
-                // Load client versions from file
-                if (File.Exists(fileName))
+                var xml = XDocument.Load(fileName);
+                var root = xml.Descendants("SupportedClients").FirstOrDefault();
+
+                if (root != null)
                 {
-                    var xml = XDocument.Load(fileName);
-                    var root = xml.Descendants("SupportedClients").FirstOrDefault();
+                    var fileVersionString = (string)root.Attribute("FileVersion");
 
-                    if (root != null)
+                    // Parse the versions for comparison
+                    var fileVersion = Version.Parse(fileVersionString);
+                    var latestVersion = Version.Parse(ClientVersionsFileVersion);
+
+                    clientVersions = ClientVersionSerializer.DeserializeAll(xml);
+
+                    // Check if client version file is out of date
+                    if (fileVersion < latestVersion)
                     {
-                        var fileVersionString = (string)root.Attribute("FileVersion");
+                        Debug.WriteLine(string.Format("Migrating supported client versions... ({0} -> {1})", fileVersion, latestVersion));
 
-                        // Parse the versions for comparison
-                        var fileVersion = Version.Parse(fileVersionString);
-                        var latestVersion = Version.Parse(App.ClientVersionsFileVersion);
-
-                        clientVersions = ClientVersionSerializer.DeserializeAll(xml);
-
-                        // Check if client version file is out of date
-                        if (fileVersion < latestVersion)
-                        {
-                            Debug.WriteLine(string.Format("Migrating supported client versions... ({0} -> {1})", fileVersion, latestVersion));
-
-                            // Perform a migration (union) of the old and new client versions
-                            if (clientVersions != null)
-                                clientVersions = clientVersions.Union(ClientVersion.GetDefaultVersions(), ClientVersion.VersionComparer);
-                        }
+                        // Perform a migration (union) of the old and new client versions
+                        if (clientVersions != null)
+                            clientVersions = clientVersions.Union(ClientVersion.GetDefaultVersions(), ClientVersion.VersionComparer);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(string.Format("Unable to load client versions: {0}", ex.Message));
-                clientVersions = null;
-            }
-
-            // Use the deserialized client versions (or the defaults)
-            return clientVersions ?? ClientVersion.GetDefaultVersions();
         }
-        #endregion
-
-        public static Version GetRunningVersion()
+        catch (Exception ex)
         {
-            return Assembly.GetExecutingAssembly().GetName().Version;
+            Debug.WriteLine(string.Format("Unable to load client versions: {0}", ex.Message));
+            clientVersions = null;
         }
+
+        // Use the deserialized client versions (or the defaults)
+        return clientVersions ?? ClientVersion.GetDefaultVersions();
+    }
+    #endregion
+
+    public static Version GetRunningVersion()
+    {
+        return Assembly.GetExecutingAssembly().GetName().Version;
     }
 }

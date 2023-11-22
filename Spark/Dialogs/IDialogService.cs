@@ -1,9 +1,8 @@
 ﻿using Spark.ViewModels;
 
-namespace Spark.Dialogs
+namespace Spark.Dialogs;
+
+public interface IDialogService
 {
-    public interface IDialogService
-    {
-        bool? ShowDialog<T>(T dataContext) where T : DialogViewModel;
-    }
+    bool? ShowDialog<T>(T dataContext) where T : DialogViewModel;
 }

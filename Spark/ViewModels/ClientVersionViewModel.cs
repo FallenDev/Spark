@@ -2,109 +2,108 @@
 
 using Spark.Models;
 
-namespace Spark.ViewModels
+namespace Spark.ViewModels;
+
+public sealed class ClientVersionViewModel : ViewModelBase
 {
-    public sealed class ClientVersionViewModel : ViewModelBase
+    private ClientVersion clientVersion;
+
+    #region Model Properties
+    public string Name
     {
-        ClientVersion clientVersion;
-
-        #region Model Properties
-        public string Name
+        get { return clientVersion.Name; }
+        set
         {
-            get { return clientVersion.Name; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.Name = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.Name = value;
+            OnPropertyChanged();
         }
+    }
 
-        public int VersionCode
+    public int VersionCode
+    {
+        get { return clientVersion.VersionCode; }
+        set
         {
-            get { return clientVersion.VersionCode; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.VersionCode = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.VersionCode = value;
+            OnPropertyChanged();
         }
+    }
 
-        public string Hash
+    public string Hash
+    {
+        get { return clientVersion.Hash; }
+        set
         {
-            get { return clientVersion.Hash; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.Hash = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.Hash = value;
+            OnPropertyChanged();
         }
+    }
 
-        public long ServerHostnamePatchAddress
+    public long ServerHostnamePatchAddress
+    {
+        get { return clientVersion.ServerHostnamePatchAddress; }
+        set
         {
-            get { return clientVersion.ServerHostnamePatchAddress; }
-            set
-            {
-                OnPropertyChanged();
-                clientVersion.ServerHostnamePatchAddress = value;
-                OnPropertyChanging();
-            }
+            OnPropertyChanged();
+            clientVersion.ServerHostnamePatchAddress = value;
+            OnPropertyChanging();
         }
+    }
 
-        public long ServerPortPatchAddress
+    public long ServerPortPatchAddress
+    {
+        get { return clientVersion.ServerPortPatchAddress; }
+        set
         {
-            get { return clientVersion.ServerPortPatchAddress; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.ServerPortPatchAddress = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.ServerPortPatchAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        public long IntroVideoPatchAddress
+    public long IntroVideoPatchAddress
+    {
+        get { return clientVersion.IntroVideoPatchAddress; }
+        set
         {
-            get { return clientVersion.IntroVideoPatchAddress; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.IntroVideoPatchAddress = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.IntroVideoPatchAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        public long MultipleInstancePatchAddress
+    public long MultipleInstancePatchAddress
+    {
+        get { return clientVersion.MultipleInstancePatchAddress; }
+        set
         {
-            get { return clientVersion.MultipleInstancePatchAddress; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.MultipleInstancePatchAddress = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.MultipleInstancePatchAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        public long HideWallsPatchAddress
+    public long HideWallsPatchAddress
+    {
+        get { return clientVersion.HideWallsPatchAddress; }
+        set
         {
-            get { return clientVersion.HideWallsPatchAddress; }
-            set
-            {
-                OnPropertyChanging();
-                clientVersion.HideWallsPatchAddress = value;
-                OnPropertyChanged();
-            }
+            OnPropertyChanging();
+            clientVersion.HideWallsPatchAddress = value;
+            OnPropertyChanged();
         }
-        #endregion
+    }
+    #endregion
 
-        public ClientVersionViewModel(ClientVersion clientVersion)
-            : base(null, null)
-        {
-            if (clientVersion == null)
-                throw new ArgumentNullException("clientVersion");
+    public ClientVersionViewModel(ClientVersion clientVersion)
+        : base(null, null)
+    {
+        if (clientVersion == null)
+            throw new ArgumentNullException("clientVersion");
 
-            this.clientVersion = clientVersion;
-        }
+        this.clientVersion = clientVersion;
     }
 }
