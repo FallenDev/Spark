@@ -10,8 +10,7 @@ Spark is a graphical application that provides additional options when launching
 
 #### Download (Binaries)
 
-The latest Spark binaries are available on Zolian's Discord. Please keep in mind that they may not reflect the latest code changes here.
-
+Please see <a href="https://github.com/FallenDev/Spark/releases/tag/v1.0.1-net-8">here</a> for latest binaries.  
 You will need the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.0-windows-x64-installer">.NET 8</a> to run Spark.
 
 #### Language and Framework
