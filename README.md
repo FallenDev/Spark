@@ -18,7 +18,7 @@ You will need the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/th
 Spark is a WPF application written in C# using Visual Studio 2022. It targets .NET 8 and implements a simple MVVM (Model-View-ViewModel) architecture.
 
 #### Client Version Support
-Spark currently supports <strong>version 7.41</strong> of the official Dark Ages client. It also support Zolian 9.13, and Legends 7.18. You may edit the generated <strong>Versions.xml</strong> file to support additional client versions.
+Spark currently supports <strong>version 7.41</strong> of the official Dark Ages client. It also support Zolian 9.13. You may edit the generated <strong>Versions.xml</strong> file to support additional client versions.
 
 #### Developers
 
