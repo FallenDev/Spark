@@ -30,22 +30,11 @@ namespace Spark.Models
         #endregion
 
         #region Standard Client Versions
-        public static readonly ClientVersion Version739 = new ClientVersion()
-        {
-            Name = "US Dark Ages 7.39",
-            VersionCode = 739,
-            Hash = "ca31b8165ea7409d285d81616d8ca4f2",      // MD5
-            ServerHostnamePatchAddress = 0x4341FA,
-            ServerPortPatchAddress = 0x434224,
-            IntroVideoPatchAddress = 0x42F48F,
-            MultipleInstancePatchAddress = 0x5911AE,
-            HideWallsPatchAddress = 0x624BC4
-        };
 
-        public static readonly ClientVersion Version737 = new ClientVersion()
+        public static readonly ClientVersion Version718 = new()
         {
-            Name = "US Dark Ages 7.37",
-            VersionCode = 737,
+            Name = "CA Legends 7.18",
+            VersionCode = 718,
             Hash = "36f4689b09a4a91c74555b3c3603b196",
             ServerHostnamePatchAddress = 0x4341FA,
             ServerPortPatchAddress = 0x434224,
@@ -54,19 +43,20 @@ namespace Spark.Models
             HideWallsPatchAddress = 0x624BC4
         };
 
-        public static readonly ClientVersion Version740 = new ClientVersion()
+        public static readonly ClientVersion Version913 = new()
         {
-            Name = "US Dark Ages 7.40",
-            VersionCode = 740,
-            Hash = "9dc6fb13d0470331bf5ba230343fce42",
-            ServerHostnamePatchAddress = 0x4341FA,
-            ServerPortPatchAddress = 0x434224,
-            IntroVideoPatchAddress = 0x42F48F,
-            MultipleInstancePatchAddress = 0x5912AE,
-            HideWallsPatchAddress = 0x624CC4
+            Name = "US Zolian 9.13",
+            VersionCode = 913,
+            Hash = "3244dc0e68cd26f4fb1626da3673fda8",
+            ServerHostnamePatchAddress = 0x4333C2,
+            ServerPortPatchAddress = 0x4333E4,
+            IntroVideoPatchAddress = 0x42E61F,
+            MultipleInstancePatchAddress = 0x57A7CE,
+            HideWallsPatchAddress = 0x5FD874,
+            SkipHostnamePatchAddress = 0x433391
         };
 
-        public static readonly ClientVersion Version741 = new ClientVersion()
+        public static readonly ClientVersion Version741 = new()
         {
             Name = "US Dark Ages 7.41",
             VersionCode = 741,
@@ -78,6 +68,7 @@ namespace Spark.Models
             HideWallsPatchAddress = 0x5FD874,
             SkipHostnamePatchAddress = 0x433391
         };
+
         #endregion
 
         #region Properties
@@ -96,10 +87,9 @@ namespace Spark.Models
 
         public static IEnumerable<ClientVersion> GetDefaultVersions()
         {
-            yield return Version737;
-            yield return Version739;
-            yield return Version740;
+            yield return Version718;
             yield return Version741;
+            yield return Version913;
         }
     }
 }
