@@ -33,7 +33,6 @@ public abstract class WorkspaceViewModel : ViewModelBase
     {
         var handler = RequestClose;
 
-        if (handler != null)
-            handler(this, EventArgs.Empty);
+        handler?.Invoke(this, EventArgs.Empty);
     }
 }

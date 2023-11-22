@@ -14,8 +14,7 @@ public abstract class Observable : INotifyPropertyChanged, INotifyPropertyChangi
     {
         var handler = PropertyChanged;
 
-        if (handler != null)
-            handler(this, new PropertyChangedEventArgs(propertyName));
+        handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion
 
@@ -26,8 +25,7 @@ public abstract class Observable : INotifyPropertyChanged, INotifyPropertyChangi
     {
         var handler = PropertyChanging;
 
-        if (handler!=null)
-            handler(this, new PropertyChangingEventArgs(propertyName));
+        handler?.Invoke(this, new PropertyChangingEventArgs(propertyName));
     }
     #endregion
 
@@ -40,8 +38,7 @@ public abstract class Observable : INotifyPropertyChanged, INotifyPropertyChangi
             return false;
 
         // OnChanging acton invoked prior to OnPropertyChanging
-        if (onChanging != null)
-            onChanging(newValue);
+        onChanging?.Invoke(newValue);
 
         OnPropertyChanging(propertyName);
             
@@ -49,8 +46,7 @@ public abstract class Observable : INotifyPropertyChanged, INotifyPropertyChangi
         backingStore = newValue;
 
         // OnChanged action invoked prior to OnPropertyChanged
-        if (onChanged != null)
-            onChanged();
+        onChanged?.Invoke();
 
         OnPropertyChanged(propertyName);
         return true;

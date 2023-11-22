@@ -24,8 +24,8 @@ public sealed class DelegateCommand : ICommand
     #region ICommand
     public event EventHandler CanExecuteChanged
     {
-        add { CommandManager.RequerySuggested += value; }
-        remove { CommandManager.RequerySuggested -= value; }
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 
     public void Execute(object parameter)

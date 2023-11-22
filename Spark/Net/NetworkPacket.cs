@@ -6,16 +6,16 @@ using Spark.Common;
 
 namespace Spark.Net;
 
-public class NetworkPacket : INetworkPacket
+public sealed class NetworkPacket : INetworkPacket
 {
     public static readonly int HeaderSize = 4;
     public static readonly byte NexonSignature = 0xAA;
 
     #region Properties
-    public virtual byte Signature { get; protected set; }
-    public virtual short Size { get; protected set; }
-    public virtual byte Command { get; protected set; }
-    public virtual IReadOnlyList<byte> Data { get; protected set; }
+    public byte Signature { get; protected set; }
+    public short Size { get; protected set; }
+    public byte Command { get; protected set; }
+    public IReadOnlyList<byte> Data { get; protected set; }
     #endregion
 
     #region Constructors
@@ -51,7 +51,7 @@ public class NetworkPacket : INetworkPacket
     }
 
     #region IEnumerable<byte> Methods
-    public virtual IEnumerator<byte> GetEnumerator()
+    public IEnumerator<byte> GetEnumerator()
     {
         yield return Signature;
         yield return Size.HiByte();

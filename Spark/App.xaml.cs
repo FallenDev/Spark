@@ -172,8 +172,7 @@ public partial class App : Application
                         Debug.WriteLine(string.Format("Migrating supported client versions... ({0} -> {1})", fileVersion, latestVersion));
 
                         // Perform a migration (union) of the old and new client versions
-                        if (clientVersions != null)
-                            clientVersions = clientVersions.Union(ClientVersion.GetDefaultVersions(), ClientVersion.VersionComparer);
+                        clientVersions = clientVersions?.Union(ClientVersion.GetDefaultVersions(), ClientVersion.VersionComparer);
                     }
                 }
             }

@@ -30,46 +30,46 @@ public class DialogViewModel : WorkspaceViewModel
     public event EventHandler NegativeButtonClicked;
 
     #region Properties
-    public virtual string Title
+    public string Title
     {
-        get { return title; }
-        set { SetProperty(ref title, value); }
+        get => title;
+        set => SetProperty(ref title, value);
     }
 
-    public virtual string Message
+    public string Message
     {
-        get { return message; }
-        set { SetProperty(ref message, value); }
+        get => message;
+        set => SetProperty(ref message, value);
     }
 
-    public virtual string MessageHint
+    public string MessageHint
     {
-        get { return messageHint; }
-        set { SetProperty(ref messageHint, value); }
+        get => messageHint;
+        set => SetProperty(ref messageHint, value);
     }
 
-    public virtual string PositiveButtonTitle
+    public string PositiveButtonTitle
     {
-        get { return positiveButtonTitle; }
-        set { SetProperty(ref positiveButtonTitle, value); }
+        get => positiveButtonTitle;
+        set => SetProperty(ref positiveButtonTitle, value);
     }
 
-    public virtual string NegativeButtonTitle
+    public string NegativeButtonTitle
     {
-        get { return negativeButtonTitle; }
-        set { SetProperty(ref negativeButtonTitle, value); }
+        get => negativeButtonTitle;
+        set => SetProperty(ref negativeButtonTitle, value);
     }
 
-    public virtual bool IsPositiveButtonVisible
+    public bool IsPositiveButtonVisible
     {
-        get { return isPositiveButtonVisible; }
-        set { SetProperty(ref isPositiveButtonVisible, value); }
+        get => isPositiveButtonVisible;
+        set => SetProperty(ref isPositiveButtonVisible, value);
     }
 
-    public virtual bool IsNegativeButtonVisible
+    public bool IsNegativeButtonVisible
     {
-        get { return isNegativeButtonVisible; }
-        set { SetProperty(ref isNegativeButtonVisible, value); }
+        get => isNegativeButtonVisible;
+        set => SetProperty(ref isNegativeButtonVisible, value);
     }
 
     public ICommand PositiveButtonCommand
@@ -104,7 +104,7 @@ public class DialogViewModel : WorkspaceViewModel
         Message = message;
         MessageHint = messageHint;
 
-        if (buttons == DialogButtons.OK || buttons == DialogButtons.OKCancel)
+        if (buttons is DialogButtons.OK or DialogButtons.OKCancel)
         {
             PositiveButtonTitle = "_OK";
             NegativeButtonTitle = "_Cancel";
@@ -120,19 +120,17 @@ public class DialogViewModel : WorkspaceViewModel
         }
     }
 
-    protected virtual void OnPositiveButtonClicked()
+    private void OnPositiveButtonClicked()
     {
         var handler = PositiveButtonClicked;
 
-        if (handler != null)
-            handler(this, EventArgs.Empty);
+        handler?.Invoke(this, EventArgs.Empty);
     }
 
-    protected virtual void OnNegativeButtonClicked()
+    private void OnNegativeButtonClicked()
     {
         var handler = NegativeButtonClicked;
 
-        if (handler != null)
-            handler(this, EventArgs.Empty);
+        handler?.Invoke(this, EventArgs.Empty);
     }
 }

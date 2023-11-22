@@ -51,8 +51,7 @@ internal partial class SparkDialog
         var button = sender as Button;
         var window = button.TemplatedParent as Window;
 
-        if (window != null)
-            window.Close();
+        window?.Close();
     }
     #endregion
 }

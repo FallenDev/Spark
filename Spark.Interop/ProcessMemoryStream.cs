@@ -46,10 +46,7 @@ public class ProcessMemoryStream : Stream
         }
     }
 
-    public override long Length
-    {
-        get { throw new NotSupportedException("Process memory stream does not have a specific length"); }
-    }
+    public override long Length => throw new NotSupportedException("Process memory stream does not have a specific length");
 
     public override long Position
     {

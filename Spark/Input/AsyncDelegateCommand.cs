@@ -25,8 +25,8 @@ public sealed class AsyncDelegateCommand : ICommand
     #region ICommand
     public event EventHandler CanExecuteChanged
     {
-        add { CommandManager.RequerySuggested += value; }
-        remove { CommandManager.RequerySuggested -= value; }
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 
     public async void Execute(object parameter)

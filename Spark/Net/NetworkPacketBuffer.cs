@@ -13,7 +13,8 @@ public sealed class NetworkPacketBuffer
     private Queue<INetworkPacket> packets = new Queue<INetworkPacket>();
 
     #region Properties
-    public int PacketCount { get { return packets.Count; } }
+    public int PacketCount => packets.Count;
+
     #endregion
 
     public NetworkPacketBuffer() { }

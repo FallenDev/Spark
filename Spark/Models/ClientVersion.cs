@@ -35,6 +35,8 @@ public sealed class ClientVersion
     public static readonly ClientVersion Version913 = new()
     {
         Name = "US Zolian 9.13",
+        Hostname = "66.211.203.116",
+        Port = 4200,
         VersionCode = 913,
         Hash = "3244dc0e68cd26f4fb1626da3673fda8",
         ServerHostnamePatchAddress = 0x4333C2,
@@ -48,6 +50,8 @@ public sealed class ClientVersion
     public static readonly ClientVersion Version741 = new()
     {
         Name = "US Dark Ages 7.41",
+        Hostname = "da0.kru.com",
+        Port = 2610,
         VersionCode = 741,
         Hash = "3244dc0e68cd26f4fb1626da3673fda8",
         ServerHostnamePatchAddress = 0x4333C2,
@@ -62,6 +66,8 @@ public sealed class ClientVersion
 
     #region Properties
     public string Name { get; set; }
+    public string Hostname { get; set; }
+    public int Port { get; set; }
     public int VersionCode { get; set; }
     public string Hash { get; set; }
     public long ServerHostnamePatchAddress { get; set; }

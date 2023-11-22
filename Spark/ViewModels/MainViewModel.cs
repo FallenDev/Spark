@@ -79,26 +79,26 @@ public sealed class MainViewModel : WorkspaceViewModel
 
     public UserSettingsViewModel UserSettings
     {
-        get { return userSettingsViewModel; }
-        set { SetProperty(ref userSettingsViewModel, value); }
+        get => userSettingsViewModel;
+        set => SetProperty(ref userSettingsViewModel, value);
     }
 
     public ObservableCollection<ClientVersionViewModel> ClientVersions
     {
-        get { return clientVersionViewModels; }
-        set { SetProperty(ref clientVersionViewModels, value); }
+        get => clientVersionViewModels;
+        set => SetProperty(ref clientVersionViewModels, value);
     }
 
     public string TestConnectionButtonTitle
     {
-        get { return testConnectionButtonTitle; }
-        set { SetProperty(ref testConnectionButtonTitle, value); }
+        get => testConnectionButtonTitle;
+        set => SetProperty(ref testConnectionButtonTitle, value);
     }
 
     public bool IsTestingConnection
     {
-        get { return isTestingConnection; }
-        set { SetProperty(ref isTestingConnection, value); }
+        get => isTestingConnection;
+        set => SetProperty(ref isTestingConnection, value);
     }
     #endregion
 

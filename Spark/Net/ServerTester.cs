@@ -140,8 +140,7 @@ public class ServerTester : IServerTester
 
         if (isDisposing)
         {
-            if (socket != null)
-                socket.Dispose();
+            socket?.Dispose();
         }
 
         isDisposed = true;

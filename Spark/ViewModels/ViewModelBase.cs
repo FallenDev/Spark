@@ -8,7 +8,7 @@ using Spark.Dialogs;
 
 namespace Spark.ViewModels;
 
-public abstract class ViewModelBase : Observable, IDisposable
+public class ViewModelBase : Observable, IDisposable
 {
     private bool isDisposed;
     private string displayName;
@@ -16,22 +16,22 @@ public abstract class ViewModelBase : Observable, IDisposable
     private IDialogService dialogService;
 
     #region Properties
-    public virtual string DisplayName
+    public string DisplayName
     {
-        get { return displayName; }
-        set { SetProperty(ref displayName, value); }
+        get => displayName;
+        set => SetProperty(ref displayName, value);
     }
 
-    public virtual bool ThrowOnInvalidPropertyName
+    public bool ThrowOnInvalidPropertyName
     {
-        get { return throwOnInvalidPropertyName; }
-        set { SetProperty(ref throwOnInvalidPropertyName, value); }
+        get => throwOnInvalidPropertyName;
+        set => SetProperty(ref throwOnInvalidPropertyName, value);
     }
 
-    public virtual IDialogService DialogService
+    public IDialogService DialogService
     {
-        get { return dialogService; }
-        set { SetProperty(ref dialogService, value); }
+        get => dialogService;
+        set => SetProperty(ref dialogService, value);
     }
     #endregion
 
@@ -48,7 +48,7 @@ public abstract class ViewModelBase : Observable, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool isDisposing)
+    private void Dispose(bool isDisposing)
     {
         if (isDisposed)
             return;

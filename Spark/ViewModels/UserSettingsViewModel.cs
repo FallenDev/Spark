@@ -11,7 +11,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
     #region Model Properties
     public string ClientExecutablePath
     {
-        get { return userSettings.ClientExecutablePath; }
+        get => userSettings.ClientExecutablePath;
         set
         {
             OnPropertyChanging();
@@ -22,7 +22,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public string ClientVersion
     {
-        get { return userSettings.ClientVersion; }
+        get => userSettings.ClientVersion;
         set
         {
             OnPropertyChanging();
@@ -33,7 +33,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public bool ShouldAutoDetectClientVersion
     {
-        get { return userSettings.ShouldAutoDetectClientVersion; }
+        get => userSettings.ShouldAutoDetectClientVersion;
         set
         {
             OnPropertyChanging();
@@ -44,7 +44,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public string ServerHostname
     {
-        get { return userSettings.ServerHostname; }
+        get => userSettings.ServerHostname;
         set
         {
             OnPropertyChanging();
@@ -55,7 +55,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public int ServerPort
     {
-        get { return userSettings.ServerPort; }
+        get => userSettings.ServerPort;
         set
         {
             OnPropertyChanging();
@@ -66,7 +66,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public bool ShouldRedirectClient
     {
-        get { return userSettings.ShouldRedirectClient; }
+        get => userSettings.ShouldRedirectClient;
         set
         {
             OnPropertyChanging();
@@ -77,7 +77,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public bool ShouldSkipIntro
     {
-        get { return userSettings.ShouldSkipIntro; }
+        get => userSettings.ShouldSkipIntro;
         set
         {
             OnPropertyChanging();
@@ -88,7 +88,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public bool ShouldAllowMultipleInstances
     {
-        get { return userSettings.ShouldAllowMultipleInstances; }
+        get => userSettings.ShouldAllowMultipleInstances;
         set
         {
             OnPropertyChanging();
@@ -99,7 +99,7 @@ public sealed class UserSettingsViewModel : ViewModelBase
 
     public bool ShouldHideWalls
     {
-        get { return userSettings.ShouldHideWalls; }
+        get => userSettings.ShouldHideWalls;
         set
         {
             OnPropertyChanging();

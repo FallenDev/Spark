@@ -135,8 +135,7 @@ public sealed class RuntimePatcher : IDisposable
 
         if (isDisposing)
         {
-            if (writer != null)
-                writer.Dispose();
+            writer?.Dispose();
         }
 
         isDisposed = true;

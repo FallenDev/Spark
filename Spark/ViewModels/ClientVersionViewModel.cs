@@ -11,7 +11,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
     #region Model Properties
     public string Name
     {
-        get { return clientVersion.Name; }
+        get => clientVersion.Name;
         set
         {
             OnPropertyChanging();
@@ -22,7 +22,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public int VersionCode
     {
-        get { return clientVersion.VersionCode; }
+        get => clientVersion.VersionCode;
         set
         {
             OnPropertyChanging();
@@ -33,7 +33,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public string Hash
     {
-        get { return clientVersion.Hash; }
+        get => clientVersion.Hash;
         set
         {
             OnPropertyChanging();
@@ -44,7 +44,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public long ServerHostnamePatchAddress
     {
-        get { return clientVersion.ServerHostnamePatchAddress; }
+        get => clientVersion.ServerHostnamePatchAddress;
         set
         {
             OnPropertyChanged();
@@ -55,7 +55,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public long ServerPortPatchAddress
     {
-        get { return clientVersion.ServerPortPatchAddress; }
+        get => clientVersion.ServerPortPatchAddress;
         set
         {
             OnPropertyChanging();
@@ -66,7 +66,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public long IntroVideoPatchAddress
     {
-        get { return clientVersion.IntroVideoPatchAddress; }
+        get => clientVersion.IntroVideoPatchAddress;
         set
         {
             OnPropertyChanging();
@@ -77,7 +77,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public long MultipleInstancePatchAddress
     {
-        get { return clientVersion.MultipleInstancePatchAddress; }
+        get => clientVersion.MultipleInstancePatchAddress;
         set
         {
             OnPropertyChanging();
@@ -88,7 +88,7 @@ public sealed class ClientVersionViewModel : ViewModelBase
 
     public long HideWallsPatchAddress
     {
-        get { return clientVersion.HideWallsPatchAddress; }
+        get => clientVersion.HideWallsPatchAddress;
         set
         {
             OnPropertyChanging();
