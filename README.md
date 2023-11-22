@@ -10,15 +10,15 @@ Spark is a graphical application that provides additional options when launching
 
 #### Download (Binaries)
 
-The latest Spark binaries are available for <a href="https://www.dropbox.com/s/sagoqwway2dzlau/Spark.zip?dl=0">download via DropBox</a>. Please keep in mind that they may not reflect the latest code changes here.
+The latest Spark binaries are available on Zolian's Discord. Please keep in mind that they may not reflect the latest code changes here.
 
-You will need the <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40773">.NET Framework 4.5.1</a> to run Spark.
+You will need the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.0-windows-x64-installer">.NET 8</a> to run Spark.
 
 #### Language and Framework
-Spark is a WPF application written in C# using Visual Studio 2013 (Community Edition). It targets version 4.5.1 of the .NET Framework and implements a simple MVVM (Model-View-ViewModel) architecture.
+Spark is a WPF application written in C# using Visual Studio 2022. It targets .NET 8 and implements a simple MVVM (Model-View-ViewModel) architecture.
 
 #### Client Version Support
-Spark currently supports <strong>version 7.41</strong> of the official Dark Ages game client. Other clients may also be supported, though their support is not guaranteed. You may edit the generated <strong>Versions.xml</strong> file to support additional client versions.
+Spark currently supports <strong>version 7.41</strong> of the official Dark Ages client. It also support Zolian 9.13, and Legends 7.18. You may edit the generated <strong>Versions.xml</strong> file to support additional client versions.
 
 #### Developers
 
