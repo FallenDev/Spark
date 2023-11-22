@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Deployment.Application;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -192,9 +189,6 @@ namespace Spark
 
         public static Version GetRunningVersion()
         {
-            if (ApplicationDeployment.IsNetworkDeployed)
-                return ApplicationDeployment.CurrentDeployment.CurrentVersion;
-
             return Assembly.GetExecutingAssembly().GetName().Version;
         }
     }

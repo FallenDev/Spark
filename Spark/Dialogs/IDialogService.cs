@@ -1,6 +1,4 @@
-﻿using System;
-
-using Spark.ViewModels;
+﻿using Spark.ViewModels;
 
 namespace Spark.Dialogs
 {

@@ -1,14 +1,14 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark", "Spark\Spark.csproj", "{F98D2D42-C135-46CC-9A15-94F051EF030B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spark", "Spark\Spark.csproj", "{F98D2D42-C135-46CC-9A15-94F051EF030B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A895611D-35F1-404D-A5CE-514F62C612FD} = {A895611D-35F1-404D-A5CE-514F62C612FD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Interop", "Spark.Interop\Spark.Interop.csproj", "{A895611D-35F1-404D-A5CE-514F62C612FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spark.Interop", "Spark.Interop\Spark.Interop.csproj", "{A895611D-35F1-404D-A5CE-514F62C612FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

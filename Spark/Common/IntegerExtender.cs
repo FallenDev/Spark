@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Spark.Common
+﻿namespace Spark.Common
 {
     public static class IntegerExtender
     {
